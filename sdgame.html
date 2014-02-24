@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <title>Conor's Game</title>
+      <script>
+         // Global Variables
+         
+          // Globals
+          /*
+MAX_LOCALES = 8;   // Total number of rooms/locations we have in the game.
+currentLocale = 0;       // Player starts in locale 0.
+command;              // What the player types as he or she plays the game.
+
+locations;          // An uninitialized array of type String. See init() for initialization.
+nav;                // An uninitialized array of type int int.
+
+         */
+stillPlaying = true; // Controls the game loop.         
+// start game
+
+//init();
+updateDisplay();
+
+//Game Loop
+/*while (stillPlaying === true) {
+	//getCommand();
+	navigate();
+	updateDisplay();
+	}   */
+         
+         
+         var currentLocal = "Home";
+			 
+         function updateDisplay() {
+            var msg = "";
+            switch (currentLocal) {
+               case "Home":  msg = "Inside your home.";
+                               break;
+               case "Outside":  msg = "You are outside.";
+                               break;
+               case "Grandpa's house": msg = "You are at your Grandpa's House.";
+                               break;
+               case "Grandpa's shed": msg = "You are in the shed.";
+                               break;
+               case "Music Shop Main": msg = "You are in the music shop.";
+                               break;
+               case "Music Shop Guitar Room": msg = "You are in the guitar room.";
+                               break;
+               case "Music Shop Keyboards": msg = "You are in the keyboard room.";
+                               break;
+               case "Concert Venue": msg = "You are at the concert venue.";
+                               break;
+               case "Storage Closet": msg = "You are in the closet.";
+                               break;
+                
+               default      : msg = "currentLocal matches no cases";
+            }
+            var taPtr = document.getElementById("taDisplay");
+            var history = taPtr.value;
+            taPtr.value = msg + "\n" + history; 
+         }
+         
+         function moveMap(dir) {
+            var before = currentLocale;
+            switch(dir) {
+        
+            }
+            if (currentLocale != before) {
+               updateDisplay();
+            }
+         }
+         
+         
+       
+		 function Items (id) {
+		 		this.id;
+		 		this.name;
+		 		this.desc;
+		 		return this.name + this.desc;
+		 	}       
+		 	
+		 	var item0 = Items (0);
+		 		item0.name = "Drum kit.";
+		 		item0.desc = "There are drum sticks in a sleeve attached to the snare. Everything looks like it's here!";
+		 		
+		 	var item1 = Items (1);
+		 		item1.name = "Guitar.";
+		 		item1.desc = "It's a Gibson Les Paul! This thing rocks!";
+		 		
+		 	var item2 = Items (2);
+		 		item2.name = "Synthesizer.";
+		 		item2.desc = "It's a Roland Juno Di 61! Groovy...";
+		 		
+		 	var item3 = Items (3);
+		 		item3.name = "Microphone.";
+		 		item3.desc = "Now everyone can hear those pipes!";
+		 		
+		 	       
+         
+         function Locales(id) {
+         		/*this.id;
+         		this.name;
+         		this.desc;
+         		*/
+         		alert (Locales[id].name + loc[id].desc);
+         		
+            }
+         
+            
+            
+       			var loc0
+            	loc0.name = "Home.";
+            	loc0.desc = "You are in your home. A man comes to your door, and wishes to speak with you of an urgent matter. There is an upcoming local 'Battle of the Bands' that is a qualifier for a nation-wide competition for the greatest band in all of the land. Many new musicians are starting to collect gear and find bandmates to perform with them, to compete in this local competition.  This competition happens once every twenty years, and you have just come of age to participate.  You have been looking forward to this competition since you were a young child. The man leaves, and it is now time to start your adventure to create the greatest band of your generation.";
+            	
+            var loc1 = Locales[1];
+            	loc1.name = "Outside.";
+            	loc1.desc = "	You have left your house, and are outside. You see your Grandpa's house to the east, the local Music Shop to the south, and the Concert Venue to the west. You don't yet have instruments, why don't you hit up good ole' Gramps?";
+            	
+            var loc2 = Locales (2);
+            	loc2.name = "Grandpa's house.";
+            	loc2.desc = "You enter your Grandpa's house. He has been waiting for you.";
+            	
+            var loc3 = Locales (3);
+            	loc3.name = "Grandpa's shed.";
+            	loc3.desc = "You have entered the shed. In the corner of the room, you see a dusty drum kit. ";
+            	
+            var loc4 = Locales (4);
+            	loc4.name = "Music Shop Main.";
+            	loc4.desc = "You have entered the music shop. There is a man behind the counter."
+            	
+            var loc5 = Locales (5);
+            	loc5.name = "Music Shop Guitar Room.";
+	            	loc5.desc = "It looks like you are one of the last people to get to the guitar room. There is one old dusty guitar case on the wall though..";
+            	
+            	
+            var loc6 = Locales (6);
+            	loc6.name = "Music Shop Keyboards.";
+            	loc6.desc = "One final synthesizer is left in the center of the room.";
+
+            	
+        	var loc7 = Locales (7);
+            	loc7.name = "Concert Venue.";
+            	loc7.desc = "Wow, this place is pretty big. There is a man on stage cleaning up, it looks like he would know what's going on around here.";
+            	            	
+            var loc8 = Locales (8);
+            	loc8.name = "Storage Closet.";
+            	loc8.desc = "There is a microphone on a stand in here!"
+            	 
+            	 //do this for each locale
+            	 
+            	
+            	Locales[0] = loc0;
+            	Locales[1] = loc1;
+            	Locales[2] = loc2;
+            	Locales[3] = loc3;
+            	Locales[4] = loc4;
+            	Locales[5] = loc5;
+            	Locales[6] = loc6;
+            	Locales[7] = loc7;
+            	Locales[8] = loc8;
+            	
+         
+          // Set up the location list.
+      locales = new Array();
+      locations[0] = "Home";   
+      locations[1] = "Outside";  
+      locations[2] = "Grandpa's house";  
+	  locations[3] = "Grandpa's shed";
+      locations[4] = "Music Shop Main";   
+      locations[5] = "Music Shop Guitar Room";   
+      locations[6] = "Music Shop Keyboards";
+      locations[7] = "Concert Venue";
+      locations[8] = "Storage Closet";             
+         
+  function updateDisplay() {
+  	//document.getElementById('taDisplay').innerHTML=locations[currentLocale];
+     // TODO Use the instances of the Locale class here.
+     // TODO Display the locale descriptions.
+  }
+/*
+   function getCommand() {
+      Scanner inputReader = new Scanner(System.in);
+      command = inputReader.nextLine();  // command is global.
+   }
+   */
+
+   function navigate() {
+      INVALID = -1;
+      dir = INVALID;  
+
+/*
+      if (        command.equalsIgnoreCase("north") || command.equalsIgnoreCase("n") ) {
+         dir = 0;
+      } else if ( command.equalsIgnoreCase("south") || command.equalsIgnoreCase("s") ) {
+         dir = 1;
+      } else if ( command.equalsIgnoreCase("east")  || command.equalsIgnoreCase("e") ) {
+         dir = 2;
+      } else if ( command.equalsIgnoreCase("west")  || command.equalsIgnoreCase("w") ) {
+         dir = 3;
+
+      } else if ( command.equalsIgnoreCase("quit")  || command.equalsIgnoreCase("q")) {
+         quit();
+      } else if ( command.equalsIgnoreCase("help")  || command.equalsIgnoreCase("h")) {
+         help();
+      } else if ( command.equalsIgnoreCase("inventory")  || command.equalsIgnoreCase("i")) {
+         inventory();
+      } else if ( command.equalsIgnoreCase("play")  || command.equalsIgnoreCase("p")) {
+         play();
+      };
+      */
+
+      if (dir > -1) {   // This means a dir was set.
+         newLocation = nav[currentLocale][dir];
+         if (newLocation == INVALID) {
+            alert("You cannot go that way.");
+         } else {
+            currentLocale = newLocation;
+         }
+      }
+   }
+
+   function help() {
+      System.out.println("The commands are as follows:");
+      System.out.println("   n/north");
+      System.out.println("   s/south");
+      System.out.println("   w/west");
+      System.out.println("   e/east");
+      System.out.println("   i/inventory");
+      System.out.println("   q/quit");
+   }
+
+   function quit() {
+      stillPlaying = false;
+   }
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+         
+         
+         
+         
+         
+         
+         
+      </script>
+   </head>
+   <body onload="updateDisplay();">
+      <h1 align="center" >BAND UP</h1>
+      <textarea id="taDisplay" style="width:400px; height:200px;">
+      </textarea>
+      <br>
+      <input type="button"
+             value = "North"
+             onclick="Locales('0');">
+      <input type="button"
+             value = "South"
+             onclick="go('south');">
+      <input type="button"
+             value = "East"
+             onclick="go('east');">
+      <input type="button"
+             value = "West"
+             onclick="go('west');">
+    
+    <br>
+    <input type = "text" name="command">
+      
+      <input type="button"
+      		 value = "Go"
+      		 onclick = "">
+             
+             
+             
+             
+             
+
+<div style= float:right; margin-bottom:30>
+	<img src = "gamemap.png" alt = "Game Map" width="550" height="500">
+</div>
+   </body>
+</html>
