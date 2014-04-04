@@ -35,6 +35,10 @@ public class Locale {
         this.hasVisited = hasVisited;
     }
 
+    //public boolean sethasItem() { return hasItem; }
+
+    public boolean hasVisited = false;
+
 
     // Other methods
     public String toString() {
@@ -48,5 +52,5 @@ public class Locale {
     private int     id;
     private String  name;
     private String  desc;
-    private boolean hasVisited = false;
+   // private boolean hasVisited = false;
 }

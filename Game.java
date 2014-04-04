@@ -14,6 +14,7 @@ public class Game {
     public static int score = 0;                    // Tracker of the player's score.
     // problem with divides by zero ~ public static float achievement = score/moves;  // Calculates the achievement ratio
     public static Items[] item;                     // An uninitialized array of type Items. See init() for initialization.
+    //public static boolean hasVisited = false;
     public static void main(String[] args) {
         if (DEBUGGING) {
             // Display the command line args.
@@ -87,7 +88,8 @@ public class Game {
 
         Locale loc6 = new Locale(6);
         loc6.setName("Music Store");
-        loc6.setDesc("You have entered the music shop. There is a man waiting to help you. Talk to him.");
+        loc6.setDesc("You have entered the music shop. The man behind the counter tells you there is a \n" +
+               "drum room to the east, and a synthesizer room to the west, but not many are left.");
 
         Locale loc7 = new Locale(7);
         loc7.setName("Drum Room");
@@ -243,7 +245,9 @@ public class Game {
             quit();
         } else if ( command.equalsIgnoreCase("help")  || command.equalsIgnoreCase("h")) {
             help();
-        }
+        } /*else if ( command.equalsIgnoreCase("take")  || command.equalsIgnoreCase("t")) {
+            take();
+        } */
 
         if (dir > -1) {   // This means a dir was set.
             int newLocation = nav[currentLocale][dir];
@@ -254,18 +258,19 @@ public class Game {
                 moves = moves + 1;
                 // below is attempt to add 5 when you haven't been to this location, but
                 // I get a 'cannot resolve symbol hasVisited' error message.
-                // if (hasVisited == false) {
-                //   score = score + 5;
-                // } else { }
+                if (hasVisited = false) {
+                   score = score + 5;
+                 } else {
                     // hasVisited cannot find symbol. if I say Locale.hasVisited = true; it says it is private in Locale
-                    //hasVisited = true;
+                    hasVisited = true;
+                    }
                 }
         // MORE ATTEMPT        if (hasVisited == false) {
         //                     score = score + 5;
         //                     hasVisited == true;
         //                     } else { }
                 // TODO: Deal with hasVisited and the score here.
-            } else { }
+            } //else { }
         }
 
 
@@ -277,6 +282,8 @@ public class Game {
         System.out.println("   t/take");
         System.out.println("   m/map");
     }
+
+    // private static void take(item.name) {}  Take an item and hold it in inventory array.
 
     private static void quit() {
         stillPlaying = false;
