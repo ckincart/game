@@ -14,6 +14,9 @@ public class Locale {
         return this.id;
     }
 
+    public String getText() { return this.name + "\n" + this.desc + "\n" + this.posmoves + "\n" + this.MagicItems;}
+    public void setText(String value) {}
+
     public String getName() {
         return this.name;
     }
@@ -28,6 +31,9 @@ public class Locale {
         this.desc = value;
     }
 
+    public String getPossibleMoves() {return this.posmoves;}
+    public void setPossibleMoves(String value) {this.posmoves = value;}
+
     public boolean getHasVisited() {
         return hasVisited;
     }
@@ -35,11 +41,14 @@ public class Locale {
         this.hasVisited = hasVisited;
     }
 
-    //public boolean sethasItem() { return hasItem; }
+    public boolean getHasTaken() { return hasTaken;}
+    public void setHasTaken(boolean hasTaken) {this.hasTaken = hasTaken;}
 
-    public boolean hasVisited = false;
+    public Items getItem() {return this.item;}
+    public void setItem(Items value) {this.item = value; }
 
-
+    public String getMagicItems() {return this.MagicItems; }
+    public void setMagicItems(String value) { this.MagicItems = value; }
     // Other methods
     public String toString() {
         return "[Locale object: id=" + this.id + " name="+ this.name + " desc=" + this.desc + "]";
@@ -52,5 +61,9 @@ public class Locale {
     private int     id;
     private String  name;
     private String  desc;
-   // private boolean hasVisited = false;
+    private String  posmoves;
+    private boolean hasVisited = false;
+    private boolean hasTaken = false;
+    private Items item;
+    private String MagicItems;
 }
