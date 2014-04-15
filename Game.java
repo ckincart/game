@@ -1,10 +1,11 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Game {
 
     // Globals
-    public static final boolean DEBUGGING = false;   // Debugging flag.
-    public static final int MAX_LOCALES = 11;        // Total number of rooms/locations we have in the game.
+    public static final boolean DEBUGGING = false;  // Debugging flag.
+    public static final int MAX_LOCALES = 11;       // Total number of rooms/locations we have in the game.
     public static int currentLocale = 0;            // Player starts in locale 0.
     public static String command;                   // What the player types as he or she plays the game.
     public static boolean stillPlaying = true;      // Controls the game loop.
@@ -12,10 +13,18 @@ public class Game {
     public static int[][]  nav;                     // An uninitialized array of type int int.
     public static int moves = 0;                    // Counter of the player's moves.
     public static int score = 0;                    // Tracker of the player's score.
-    public static int achievement = 0;            // Calculates the achievement ratio
+    public static int achievement = 0;              // Calculates the achievement ratio
     public static Items[] item;                     // An uninitialized array of type Items. See init() for initialization.
     //public static MagicItems[] magicitem;         // Temporarily counted out, made these items a string.
     public static Items[] inventory;
+    public static boolean map_check = false;
+    public static boolean guitar_check = false;
+    public static boolean drums_check = false;
+    public static boolean synthesizer_check = false;
+    public static boolean mic_check = false;
+
+
+
     public static void main(String[] args) {
 
         System.out.println("Game: BAND UP");
@@ -58,6 +67,40 @@ public class Game {
         command = new String();
         stillPlaying = true;
 
+
+
+        // Set up item instances of the Items class.
+        // To add: set Magic Shoppe items as a subclass, tried and said there was a problem with not
+        //         having a constructor, but the constructor was there.
+        Items item0 = new Items(0);
+        item0.setName("map");
+        item0.setDesc("You now have the map. Type m or map to take a look.");
+
+        Items item1 = new Items(1);
+        item1.setName("guitar");
+        item1.setDesc("Wow, an old Gibson Les Paul! This thing will sound great once you brush off the dust!");
+
+        Items item2 = new Items(2);
+        item2.setName("drums");
+        item2.setDesc("A high quality drum set. Complete with cowbell.");
+
+        Items item3 = new Items(3);
+        item3.setName("synthesizer");
+        item3.setDesc("This old-school Roland Juno with get your band soundin' groovy in a jiffy.");
+
+        Items item4 = new Items(4);
+        item4.setName("microphone");
+        item4.setDesc("Now the crowd can hear those pipes!");
+
+        // Set up the Items array
+        item = new Items[5];
+        item[0] = item0;
+        item[1] = item1;
+        item[2] = item2;
+        item[3] = item3;
+        item[4] = item4;
+
+
         // Set up the location instances of the Locale class.
         Locale loc0 = new Locale(0);
         loc0.setName("Home");
@@ -71,7 +114,7 @@ public class Game {
                 "start your adventure to create the greatest band of your generation. Don't forget to take \n" +
                 "the map!");
         loc0.setPossibleMoves("You can go south to leave the house.");
-        loc0.setItem(item[0]);
+        loc0.setItem(item0);
         loc0.setHasTaken(false);
         loc0.setMagicItems("");
 
@@ -97,7 +140,7 @@ public class Game {
         loc3.setDesc("You have entered the shed. In the corner of the room, you see a dusty guitar case." + "\n" +
                "Go back to the house.");
         loc3.setPossibleMoves("Possible direction is west.");
-        loc3.setItem(item[1]);
+        loc3.setItem(item1);
         loc3.setHasTaken(false);
         loc3.setMagicItems("");
 
@@ -130,7 +173,7 @@ public class Game {
         loc7.setName("Drum Room");
         loc7.setDesc("There is one drum set left. Take it while it is still there!");
         loc7.setPossibleMoves("Possible direction is west.");
-        loc2.setItem(item[2]);
+        loc2.setItem(item2);
         loc7.setHasTaken(false);
         loc7.setMagicItems("");
 
@@ -138,7 +181,7 @@ public class Game {
         loc8.setName("Synthesizer Room");
         loc8.setDesc("A final Roland Juno is hanging on the wall under a spotlight..what a beauty.");
         loc8.setPossibleMoves("Possible direction is east.");
-        loc8.setItem(item[3]);
+        loc8.setItem(item3);
         loc8.setHasTaken(false);
         loc8.setMagicItems("");
 
@@ -155,7 +198,7 @@ public class Game {
         loc10.setName("Storage Closet");
         loc10.setDesc("There is a microphone placed on a mic stand, ready to go.");
         loc10.setPossibleMoves("Possible direction is south.");
-        loc10.setItem(item[4]);
+        loc10.setItem(item4);
         loc10.setHasTaken(false);
         loc10.setMagicItems("");
 
@@ -185,38 +228,6 @@ public class Game {
         locations[11] = loc11;
 
 
-        // Set up item instances of the Items class.
-        // To add: set Magic Shoppe items as a subclass, tried and said there was a problem with not
-        //         having a constructor, but the constructor was there.
-        Items item0 = new Items(0);
-        item0.setName("map");
-        item0.setDesc("You now have the map. Type m or map to take a look.");
-
-        Items item1 = new Items(1);
-        item1.setName("guitar");
-        item1.setDesc("Wow, an old Gibson Les Paul! This thing will sound great once you brush off the dust!");
-
-        Items item2 = new Items(2);
-        item2.setName("drums");
-        item2.setDesc("A high quality drum set. Complete with cowbell.");
-
-        Items item3 = new Items(3);
-        item3.setName("synthesizer");
-        item3.setDesc("This old-school Roland Juno with get your band soundin' groovy in a jiffy.");
-
-        Items item4 = new Items(4);
-        item4.setName("microphone");
-        item4.setDesc("Now the crowd can hear those pipes!");
-
-
-        // Set up the Items array
-        item = new Items[5];
-        item[0] = item0;
-        item[1] = item1;
-        item[2] = item2;
-        item[3] = item3;
-        item[4] = item4;
-
         //Set up Magic Items
         MagicItems magicitem0 = new MagicItems(0);
         magicitem0.setName("Super Sharp Strings");
@@ -237,10 +248,12 @@ public class Game {
         */
 
         // Set up inventory array
-       inventory = new Items[8];
+       inventory = new Items[5];
        inventory[0] = item0;
-       System.out.println(inventory);
-
+       inventory[1] = item1;
+       inventory[2] = item2;
+       inventory[3] = item3;
+       inventory[4] = item4;
 
 
         if (DEBUGGING) {
@@ -305,9 +318,13 @@ public class Game {
             help();
         } else if ( command.equalsIgnoreCase("map")   || command.equalsIgnoreCase("m")) {
             map();
-        } //else if ( command.equalsIgnoreCase("take")  || command.equalsIgnoreCase("t")) {
-            //take();
-        //}
+        } else if ( command.equalsIgnoreCase("inventory") || command.equalsIgnoreCase("i")) {
+            inventory();
+        } else if ( command.equalsIgnoreCase("take")  || command.equalsIgnoreCase("t")) {
+            take();
+        }
+        //} // else if (command.equalsIgnoreCase("play") || command.equalsIgnoreCase("p")) {
+            //play(item.name);
 
         if (dir > -1) {   // This means a dir was set.
             int newLocation = nav[currentLocale][dir];
@@ -327,25 +344,70 @@ public class Game {
     }
 
 
-     /*private void take(Items[] item) {         //put items into inventory array
-         Items currItem = item;
-         if (! currItem.getHasTaken()) {
-             Items currItem = Items;
-             currItem.setHasTaken(true);
-             if (currItem.getHasTaken()) {
-                 inventory[0] = currItem;
+
+
+  /*  private void take(Items item) {         //put items into inventory array
+         if (! item.getHasTaken() ) {
+             item.setHasTaken(true);
+             for (int i=0; i <=4; i++)
+                 inventory[X] = item;
              }
-             else {}
-         }
-         else {
+             else {
              System.out.println("There isn't an item to take.");
             }
-     }
+         }  */
 
-*/
+    private static void take() {
 
+        switch(currentLocale) {
+            case 0:
+                if (!map_check) {
+                    map_check = true;
+                    inventory[0] = item[0];
+                System.out.println("You now have the map.");
+                }  else {
+                    System.out.println("You already have the map.");
+                }
 
-
+            break;
+            case 3:
+                if (!guitar_check) {
+                    guitar_check = true;
+                    inventory[1] = item[1];
+                    System.out.println("You now have the guitar!");
+                }  else {
+                    System.out.println("You already have the guitar.");
+                }
+            break;
+            case 7:
+                if (!drums_check) {
+                    drums_check = true;
+                    inventory[2] = item[2];
+                    System.out.println("You now have the drums!");
+                }  else {
+                    System.out.println("You already have the drums.");
+                }
+            break;
+            case 8:
+                if (!synthesizer_check) {
+                    synthesizer_check = true;
+                    inventory[3] = item[3];
+                    System.out.println("You now have the synthesizer!");
+                }  else {
+                    System.out.println("You already have the synthesizer.");
+                }
+            break;
+            case 10:
+                if (!mic_check) {
+                    mic_check = true;
+                    inventory[4] = item[4];
+                    System.out.println("You now have the microphone!");
+                }  else {
+                    System.out.println("You already have the microphone.");
+                }
+            break;
+        }
+    }
 
 
     private static void help() {
@@ -358,11 +420,14 @@ public class Game {
         System.out.println("   i/inventory");
     }
 
-    /*private static void inventory() {
+    private static void inventory() {
 
-        return [this.item.hasTaken]
+        System.out.println("The following items are in your inventory:");
+        System.out.println(Arrays.toString(inventory));
 
-            } */
+    }
+
+
     private static void map() {
         System.out.print(
                  "..........................Home.........................." + "\n" +
@@ -378,10 +443,18 @@ public class Game {
 
     }
 
-    //private static void take(item.name) {}  // Take an item and hold it in inventory array.
+
+    public play(item.name) {
+
+        if(currentLocale = 11) {
+
+            if(getCommand(play());)
+        }
+
+    }
 
     private static void quit() {
         stillPlaying = false;
     }
-}
 
+}

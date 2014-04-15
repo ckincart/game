@@ -34,7 +34,7 @@ public class Items {
         public boolean getHasTaken() {
             return hasTaken;
         }
-        public void setHasVisited(boolean hasTaken) {
+        public void setHasTaken(boolean hasTaken) {
             this.hasTaken = hasTaken;
         }
 

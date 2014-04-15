@@ -18,7 +18,7 @@ public class Venue extends Locale {
     // Other methods
     @Override
     public String toString() {
-        return "Space..." + super.toString();
+        return "Venue..." + super.toString();
     }
 
 
