@@ -14,6 +14,7 @@ public class Game {
     public static int moves = 0;                    // Counter of the player's moves.
     public static int score = 0;                    // Tracker of the player's score.
     public static int achievement = 0;              // Calculates the achievement ratio
+    public static int rupees = 0;                    // Player's currency count.
     public static Items[] item;                     // An uninitialized array of type Items. See init() for initialization.
     //public static MagicItems[] magicitem;         // Temporarily counted out, made these items a string.
     public static Items[] inventory;
@@ -249,11 +250,6 @@ public class Game {
 
         // Set up inventory array
        inventory = new Items[5];
-       inventory[0] = item0;
-       inventory[1] = item1;
-       inventory[2] = item2;
-       inventory[3] = item3;
-       inventory[4] = item4;
 
 
         if (DEBUGGING) {
@@ -269,31 +265,32 @@ public class Game {
 
 
         // Set up the navigation matrix.
-        nav = new int[][] {
-                                 /* N   S   E   W */
-                                 /* 0   1   2   3 */
-         /* nav[0] for loc 0 */  { -1,  1, -1, -1 },   // Home
-         /* nav[1] for loc 1 */  {  0,  4,  2, -1 },   // Path
-         /* nav[2] for loc 2 */  { -1, -1,  3,  1 },   // Grandpa's House
-         /* nav[3] for loc 3 */  { -1, -1, -1,  2 },   // Grandpa's Shed
-         /* nav[4] for loc 4 */  {  1,  6,  5,  9 },   // Town
-         /* nav[5] for loc 5 */  { -1, -1, -1,  4 },   // Magick Shoppe
-         /* nav[6] for loc 6 */  {  4, -1,  7,  8 },   // Music Shop
-         /* nav[7] for loc 7 */  { -1, -1, -1,  6 },   // Drum Room
-         /* nav[8] for loc 8 */  { -1, -1,  6, -1 },   // Synthesizer Room
-         /* nav[9] for loc 9 */  { 10, -1,  4, 11 },   // Venue
-         /* nav[10] for loc 10 */{ -1,  9, -1, -1 },   // Storage closet with microphones
-         /* nav[11] for loc 11 */{ -1, -1,  9, -1 }   // Main Stage
-        };
+       /* nav = new int[][] {
+                               /* N   S   E   W */
+                               /* 0   1   2   3 */
+         /* nav[0] for loc 0   { -1,  1, -1, -1 },   // Home
+         /* nav[1] for loc 1   {  0,  4,  2, -1 },   // Path
+         /* nav[2] for loc 2   { -1, -1,  3,  1 },   // Grandpa's House
+         /* nav[3] for loc 3   { -1, -1, -1,  2 },   // Grandpa's Shed
+         /* nav[4] for loc 4   {  1,  6,  5,  9 },   // Town
+         /* nav[5] for loc 5   { -1, -1, -1,  4 },   // Magick Shoppe
+         /* nav[6] for loc 6   {  4, -1,  7,  8 },   // Music Shop
+         /* nav[7] for loc 7   { -1, -1, -1,  6 },   // Drum Room
+         /* nav[8] for loc 8   { -1, -1,  6, -1 },   // Synthesizer Room
+         /* nav[9] for loc 9   { 10, -1,  4, 11 },   // Venue
+         /* nav[10] for loc 10 { -1,  9, -1, -1 },   // Storage closet with microphones
+         /* nav[11] for loc 11 { -1, -1,  9, -1 }   // Main Stage
+        }; */
 
     }
+
 
     private static void updateDisplay() {
         System.out.println(locations[currentLocale].getText());
     }
 
     private static void getCommand() {
-        System.out.print("[ moves " + moves + ", score " + score + ", achievement " + achievement + "]"); //achievement " + achievement); check line 15
+        System.out.print("[ moves " + moves + ", score " + score + ", achievement " + achievement + ", rupees " + rupees + " ]"); //achievement " + achievement); check line 15
         System.out.println();
         Scanner inputReader = new Scanner(System.in);
         command = inputReader.nextLine();  // command is global.
@@ -336,6 +333,7 @@ public class Game {
                 Locale currLoc = locations[currentLocale];
                 if (! currLoc.getHasVisited()) {
                    score = score + 5;
+                   rupees = rupees + 25;
                    currLoc.setHasVisited(true);
                    achievement = score/moves;
                 }
@@ -409,6 +407,11 @@ public class Game {
         }
     }
 
+    /*private static void accessBlocker() {
+        if(guitar_check = true && drums_check = true && synthesizer_check = true)
+
+    } */
+
 
     private static void help() {
         System.out.println("The commands are as follows:");
@@ -444,7 +447,7 @@ public class Game {
     }
 
 
-    public play(item.name) {
+    /*public play(item.name) {
 
         if(currentLocale = 11) {
 
@@ -452,7 +455,7 @@ public class Game {
         }
 
     }
-
+    */
     private static void quit() {
         stillPlaying = false;
     }
