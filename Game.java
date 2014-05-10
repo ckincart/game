@@ -102,6 +102,9 @@ public class Game {
         item[4] = item4;
 
 
+
+
+        
         // Set up the location instances of the Locale class.
         Locale loc0 = new Locale(0);
         loc0.setName("Home");
