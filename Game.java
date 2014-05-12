@@ -5,12 +5,12 @@ public class Game {
 
     // Globals
     public static final boolean DEBUGGING = false;  // Debugging flag.
-    public static final int MAX_LOCALES = 11;       // Total number of rooms/locations we have in the game.
-    public static int currentLocale = 0;            // Player starts in locale 0.
+    public static final int MAX_LOCALES = 12;       // Total number of rooms/locations we have in the game.
+    public static LocationList currentLocale = null;// Player starts at this location.
     public static String command;                   // What the player types as he or she plays the game.
     public static boolean stillPlaying = true;      // Controls the game loop.
     public static Locale[] locations;               // An uninitialized array of type Locale. See init() for initialization.
-    public static int[][]  nav;                     // An uninitialized array of type int int.
+    //public static int[][]  nav;                     // An uninitialized array of type int int.
     public static int moves = 0;                    // Counter of the player's moves.
     public static int score = 0;                    // Tracker of the player's score.
     public static int achievement = 0;              // Calculates the achievement ratio
@@ -23,6 +23,22 @@ public class Game {
     public static boolean drums_check = false;
     public static boolean synthesizer_check = false;
     public static boolean mic_check = false;
+
+    //global location list variables
+
+    public static LocationList ll0 = null;
+    public static LocationList ll1 = null;
+    public static LocationList ll2 = null;
+    public static LocationList ll3 = null;
+    public static LocationList ll4 = null;
+    public static LocationList ll5 = null;
+    public static LocationList ll6 = null;
+    public static LocationList ll7 = null;
+    public static LocationList ll8 = null;
+    public static LocationList ll9 = null;
+    public static LocationList ll10 = null;
+    public static LocationList ll11 = null;
+
 
 
 
@@ -43,7 +59,18 @@ public class Game {
         if (args.length > 0) {
             int startLocation = Integer.parseInt(args[0]);
             if ( startLocation >= 0 && startLocation <= MAX_LOCALES) {
-                currentLocale = startLocation;
+                if (startLocation == 0) currentLocale = ll0;
+                if (startLocation == 1) currentLocale = ll1;
+                if (startLocation == 2) currentLocale = ll2;
+                if (startLocation == 3) currentLocale = ll3;
+                if (startLocation == 4) currentLocale = ll4;
+                if (startLocation == 5) currentLocale = ll5;
+                if (startLocation == 6) currentLocale = ll6;
+                if (startLocation == 7) currentLocale = ll7;
+                if (startLocation == 8) currentLocale = ll8;
+                if (startLocation == 9) currentLocale = ll9;
+                if (startLocation == 10) currentLocale = ll10;
+                if (startLocation == 11) currentLocale = ll11;
             }
         }
 
@@ -104,7 +131,7 @@ public class Game {
 
 
 
-        
+
         // Set up the location instances of the Locale class.
         Locale loc0 = new Locale(0);
         loc0.setName("Home");
@@ -216,8 +243,8 @@ public class Game {
         loc11.setMagicItems("");
 
 
-        // Set up the location array.
-        locations = new Locale[12];
+        // Set up the OLD location array.
+    /*  locations = new Locale[12];
         locations[0] = loc0;
         locations[1] = loc1;
         locations[2] = loc2;
@@ -230,6 +257,83 @@ public class Game {
         locations[9] = loc9;
         locations[10] = loc10;
         locations[11] = loc11;
+    */
+        // new location set up for linked list.
+        ll0 = new LocationList (loc0);
+        ll1 = new LocationList (loc1);
+        ll2 = new LocationList (loc2);
+        ll3 = new LocationList (loc3);
+        ll4 = new LocationList (loc4);
+        ll5 = new LocationList (loc5);
+        ll6 = new LocationList (loc6);
+        ll7 = new LocationList (loc7);
+        ll8 = new LocationList (loc8);
+        ll9 = new LocationList (loc9);
+        ll10 = new LocationList (loc10);
+        ll11 = new LocationList (loc11);
+
+
+        // links for navigation
+
+        ll0.setNorth(null);
+        ll0.setSouth(ll1);
+        ll0.setEast(null);
+        ll0.setWest(null);
+
+        ll1.setNorth(ll0);
+        ll1.setSouth(ll4);
+        ll1.setEast(ll2);
+        ll1.setWest(null);
+
+        ll2.setNorth(null);
+        ll2.setSouth(null);
+        ll2.setEast(ll3);
+        ll2.setWest(ll1);
+
+        ll3.setNorth(null);
+        ll3.setSouth(null);
+        ll3.setEast(null);
+        ll3.setWest(ll2);
+
+        ll4.setNorth(ll1);
+        ll4.setSouth(ll6);
+        ll4.setEast(ll5);
+        ll4.setWest(ll9);
+
+        ll5.setNorth(null);
+        ll5.setSouth(null);
+        ll5.setEast(null);
+        ll5.setWest(ll4);
+
+        ll6.setNorth(ll4);
+        ll6.setSouth(null);
+        ll6.setEast(ll7);
+        ll6.setWest(ll8);
+
+        ll7.setNorth(null);
+        ll7.setSouth(null);
+        ll7.setEast(null);
+        ll7.setWest(ll6);
+
+        ll8.setNorth(null);
+        ll8.setSouth(null);
+        ll8.setEast(ll6);
+        ll8.setWest(null);
+
+        ll9.setNorth(ll10);
+        ll9.setSouth(null);
+        ll9.setEast(ll4);
+        ll9.setWest(ll11);
+
+        ll10.setNorth(null);
+        ll10.setSouth(ll9);
+        ll10.setEast(null);
+        ll10.setWest(null);
+
+        ll11.setNorth(null);
+        ll11.setSouth(null);
+        ll11.setEast(ll9);
+        ll11.setWest(null);
 
 
         //Set up Magic Items
@@ -289,7 +393,8 @@ public class Game {
 
 
     private static void updateDisplay() {
-        System.out.println(locations[currentLocale].getText());
+        System.out.println(currentLocale.getThisLocale().getName());
+        System.out.println(currentLocale.getThisLocale().getDesc());
     }
 
     private static void getCommand() {
@@ -300,8 +405,9 @@ public class Game {
     }
 
     private static void navigate() {
-        final int INVALID = -1;
-        int dir = INVALID;  // This will get set to a value > 0 if a direction command was entered.
+        final LocationList INVALID = null;
+        // int INVALID = -1;
+        int dir = -1;  // This will get set to a value > 0 if a direction command was entered.
 
         if (        command.equalsIgnoreCase("north") || command.equalsIgnoreCase("n") ) {
             dir = 0;
@@ -327,17 +433,27 @@ public class Game {
             //play(item.name);
 
         if (dir > -1) {   // This means a dir was set.
-            int newLocation = nav[currentLocale][dir];
+
+            LocationList newLocation = null;
+            if (dir==0) newLocation = currentLocale.getNorth();
+            if (dir==1) newLocation = currentLocale.getSouth();
+            if (dir==2) newLocation = currentLocale.getEast();
+            if (dir==3) newLocation = currentLocale.getWest();
+
             if (newLocation == INVALID) {
                 System.out.println("You cannot go that way.");
-            } else {
+            }
+
+
+
+            else {
                 currentLocale = newLocation;
                 moves = moves + 1;
-                Locale currLoc = locations[currentLocale];
-                if (! currLoc.getHasVisited()) {
+                //Locale currLoc = locations[currentLocale];
+                if (! currentLocale.getThisLocale().getHasVisited()) {
                    score = score + 5;
                    rupees = rupees + 25;
-                   currLoc.setHasVisited(true);
+                   currentLocale.getThisLocale().setHasVisited(true);
                    achievement = score/moves;
                 }
             }
@@ -360,7 +476,7 @@ public class Game {
 
     private static void take() {
 
-        switch(currentLocale) {
+        switch(currentLocale.getThisLocale().getId()) {
             case 0:
                 if (!map_check) {
                     map_check = true;
